@@ -1,0 +1,14 @@
+import pycantonese as pc
+import pandas as pd
+import nltk
+corpus = pc.hkcancor()
+
+def split(string):
+    segmented = pc.segment(string)
+    converted = pc.characters_to_jyutping(string)
+    df = pd.DataFrame(data=converted, columns = ['segmented words','jyutping'])
+    df['unknown'] = pd.isnull(df['jyutping'])
+    mask = (df['unknown'] != 0)
+    df_valid = df[mask]
+    print(df_valid)
+#df_valid[‘english’] = d.check(df_valid[‘segmented words’])
